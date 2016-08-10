@@ -6,11 +6,19 @@
     android:layout_height="match_parent"
     >
 
+
   <android.support.v7.widget.RecyclerView
       android:id="@+id/recycler_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       />
+  
+  <TextView
+      android:id="@+id/recycler_view_stock_empty"
+      android:text="@string/empty_stock_list"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_horizontal"/>
 
   <com.melnykov.fab.FloatingActionButton
       android:id="@+id/fab"
@@ -19,6 +27,7 @@
       android:layout_gravity="bottom|right"
       android:layout_margin="16dp"
       android:src="@drawable/ic_add_white_24dp"
+      android:contentDescription="@string/a11y_add_new_item_button"
       fab:fab_colorNormal="@color/material_blue_500"
       fab:fab_colorPressed="@color/material_blue_600"
       fab:fab_colorRipple="@color/ripple"
@@ -28,3 +37,4 @@
       fab:layout_anchorGravity="bottom | end"
       />
 </FrameLayout>
+

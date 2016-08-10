@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="http://schemas.android.com/tools">
+    <string name="action_example">العمل سبيل المثال</string>
+
+    <string name="action_settings">إعدادات</string>
+    <string name="action_change_units">وحدات التغيير</string>
+    <string name="symbol_search">رمز البحث</string>
+    <string name="content_test">بحث عن الأوراق المالية رمز</string>
+    <string name="input_prefill"></string>
+    <string name="network_toast">اه اوه! هذا التطبيق يتطلب اتصال بالإنترنت</string>
+
+
+    <!-- A11y -->
+    <string name="a11y_add_new_item_button">إضافة وحدة الأسهم الجديدة</string>
+    <string name="a11y_stock_symbol">الأسهم رمز: <xliff:g id="stock_symbol">%1$s</xliff:g></string>
+    <string name="a11y_bid_price">سعر: <xliff:g id="bid_price">%1$s</xliff:g></string>
+    <string name="a11y_change">تغيير: <xliff:g id="change">%1$s</xliff:g></string>
+
+
+</resources>

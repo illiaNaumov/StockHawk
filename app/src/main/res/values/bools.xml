@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="stock_hawk_list_widget_enabled">true</bool>
+    <bool name="stock_hawk_use_detail_activity">true</bool>
+
+</resources>

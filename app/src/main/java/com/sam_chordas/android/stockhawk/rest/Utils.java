@@ -1,6 +1,9 @@
 package com.sam_chordas.android.stockhawk.rest;
 
 import android.content.ContentProviderOperation;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
@@ -74,6 +77,7 @@ public class Utils {
     ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(
         QuoteProvider.Quotes.CONTENT_URI);
     try {
+
       String change = jsonObject.getString("Change");
       builder.withValue(QuoteColumns.SYMBOL, jsonObject.getString("symbol"));
       builder.withValue(QuoteColumns.BIDPRICE, truncateBidPrice(jsonObject.getString("Bid")));
@@ -91,5 +95,34 @@ public class Utils {
       e.printStackTrace();
     }
     return builder.build();
+  }
+
+  public static boolean checkIfSymbolExists(String JSON, Context mContext) {
+    ArrayList<ContentProviderOperation> batchOperations = new ArrayList<>();
+    JSONObject jsonObject = null;
+    JSONArray resultsArray = null;
+    boolean symbolExists = true;
+    try{
+      jsonObject = new JSONObject(JSON);
+      if (jsonObject != null && jsonObject.length() != 0){
+        jsonObject = jsonObject.getJSONObject("query");
+        int count = Integer.parseInt(jsonObject.getString("count"));
+        if (count == 1){
+          jsonObject = jsonObject.getJSONObject("results")
+                  .getJSONObject("quote");
+
+          if(jsonObject.getString("Change").equals("null") && jsonObject.getString("Bid").equals("null")){
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
+            SharedPreferences.Editor spe = sp.edit();
+            spe.putInt("symbol_found", 0);
+            spe.apply();
+            symbolExists = false;
+          }
+        }
+      }
+    } catch (JSONException e){
+      Log.e(LOG_TAG, "String to JSON failed: " + e);
+    }
+    return symbolExists;
   }
 }
