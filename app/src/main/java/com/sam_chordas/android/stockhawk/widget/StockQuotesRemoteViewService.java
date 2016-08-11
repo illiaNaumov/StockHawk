@@ -1,5 +1,6 @@
 package com.sam_chordas.android.stockhawk.widget;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Binder;
@@ -68,32 +69,40 @@ public class StockQuotesRemoteViewService extends RemoteViewsService {
                         || !data.moveToPosition(position)){
                     return null;
                 }
-                RemoteViews remoteViews = new RemoteViews(getPackageName(),
-                        R.layout.widget_quotes_list);
+                RemoteViews views = new RemoteViews(getPackageName(),
+                        R.layout.list_item_quote);
 
                 String symbol = data.getString(data.getColumnIndex("symbol"));
                 String bidPrice = data.getString(data.getColumnIndex("bid_price"));
-                remoteViews.setTextViewText(R.id.stock_symbol,symbol);
-                remoteViews.setTextViewText(R.id.bid_price,bidPrice);
+                views.setTextViewText(R.id.stock_symbol,symbol);
+                views.setTextViewText(R.id.bid_price,bidPrice);
 
                 int sdk = Build.VERSION.SDK_INT;
                 if (data.getInt(data.getColumnIndex("is_up")) == 1){
-                        remoteViews.setInt(R.id.change, "setBackgroundDrawable", R.drawable.percent_change_pill_green);
+                    views.setInt(R.id.change, "setBackgroundDrawable", R.drawable.percent_change_pill_green);
                 } else{
-                        remoteViews.setInt(R.id.change, "setBackgroundDrawable", R.drawable.percent_change_pill_red);
+                    views.setInt(R.id.change, "setBackgroundDrawable", R.drawable.percent_change_pill_red);
                 }
                 if (Utils.showPercent){
-                    remoteViews.setTextViewText(R.id.change, data.getString(data.getColumnIndex("percent_change")));
+                    views.setTextViewText(R.id.change, data.getString(data.getColumnIndex("percent_change")));
                 } else{
-                    remoteViews.setTextViewText(R.id.change, data.getString(data.getColumnIndex("change")));
+                    views.setTextViewText(R.id.change, data.getString(data.getColumnIndex("change")));
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+                    setRemoteContentDescription(views, symbol);
                 }
 
-                return remoteViews;
+                return views;
+            }
+
+            @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+            private void setRemoteContentDescription(RemoteViews views, String description) {
+                views.setContentDescription(R.id.stock_symbol, description);
             }
 
             @Override
             public RemoteViews getLoadingView() {
-                return new RemoteViews(getPackageName(), R.layout.widget_quotes_list);
+                return new RemoteViews(getPackageName(), R.layout.list_item_quote);
             }
 
             @Override

@@ -6,6 +6,7 @@ import android.app.TaskStackBuilder;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
 import com.sam_chordas.android.stockhawk.R;
+import com.sam_chordas.android.stockhawk.service.StockTaskService;
 import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
 import com.sam_chordas.android.stockhawk.ui.StockValueChartActivity;
 /**
@@ -27,12 +29,11 @@ public class QuoteListProvider extends AppWidgetProvider {
 
 
         for(int appWidgetId : appWidgetIds) {
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), appWidgetId);
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_quotes_list);
 
             Intent intent = new Intent(context, MyStocksActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            remoteViews.setOnClickPendingIntent(R
-                    .id.widget, pendingIntent);
+            remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 setRemoteAdapter(context, remoteViews);
@@ -63,6 +64,12 @@ public class QuoteListProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
+        if (StockTaskService.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
+                    new ComponentName(context, getClass()));
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
