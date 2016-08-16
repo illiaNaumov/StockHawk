@@ -1,5 +1,6 @@
 package com.sam_chordas.android.stockhawk.touch_helper;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 

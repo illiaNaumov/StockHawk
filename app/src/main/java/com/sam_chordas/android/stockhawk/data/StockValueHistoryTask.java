@@ -47,7 +47,7 @@ public class StockValueHistoryTask extends AsyncTask<String, Void, ArrayList<Ent
 
             URL url = new URL(urlStringBuilder.toString());
             httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("GET");
+           httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
             int connectionStatus = httpURLConnection.getResponseCode();
 

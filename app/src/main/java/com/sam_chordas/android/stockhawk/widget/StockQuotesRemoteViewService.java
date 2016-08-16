@@ -78,10 +78,10 @@ public class StockQuotesRemoteViewService extends RemoteViewsService {
                 views.setTextViewText(R.id.bid_price,bidPrice);
 
                 int sdk = Build.VERSION.SDK_INT;
-                if (data.getInt(data.getColumnIndex("is_up")) == 1){
-                    views.setInt(R.id.change, "setBackgroundDrawable", R.drawable.percent_change_pill_green);
+               if (data.getInt(data.getColumnIndex("is_up")) == 1){
+                    views.setInt(R.id.change, "setBackgroundResource", R.drawable.percent_change_pill_green);
                 } else{
-                    views.setInt(R.id.change, "setBackgroundDrawable", R.drawable.percent_change_pill_red);
+                    views.setInt(R.id.change, "setBackgroundResource", R.drawable.percent_change_pill_red);
                 }
                 if (Utils.showPercent){
                     views.setTextViewText(R.id.change, data.getString(data.getColumnIndex("percent_change")));

@@ -10,6 +10,8 @@
     <string name="input_hint">FB</string>
     <string name="input_prefill"></string>
     <string name="network_toast">Uh-oh! This app requires an internet connection</string>
+    <string name="already_saved_warning">This stock is already saved!</string>
+    <string name="symbol_not_found">Symbol \"<xliff:g id="symbol">%1$s</xliff:g>\" not found!</string>
 
 
     <!-- A11y -->
